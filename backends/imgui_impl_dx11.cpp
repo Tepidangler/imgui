@@ -618,6 +618,8 @@ void ImGui_ImplDX11_NewFrame()
 //--------------------------------------------------------------------------------------------------------
 
 // Helper structure we store in the void* RendererUserData field of each ImGuiViewport to easily retrieve our backend data.
+static bool                            pSwapChainOccluded = false;
+
 struct ImGui_ImplDX11_ViewportData
 {
     IDXGISwapChain*                 SwapChain;
@@ -716,7 +718,15 @@ static void ImGui_ImplDX11_RenderWindow(ImGuiViewport* viewport, void*)
 static void ImGui_ImplDX11_SwapBuffers(ImGuiViewport* viewport, void*)
 {
     ImGui_ImplDX11_ViewportData* vd = (ImGui_ImplDX11_ViewportData*)viewport->RendererUserData;
-    vd->SwapChain->Present(0, 0); // Present without vsync
+    if (pSwapChainOccluded)
+    {
+        ::Sleep(10);
+    }
+    else
+    {
+        vd->SwapChain->Present(1, 0);
+    }
+    pSwapChainOccluded = (vd->SwapChain->Present(1, DXGI_PRESENT_TEST) == DXGI_STATUS_OCCLUDED); // Present without vsync
 }
 
 static void ImGui_ImplDX11_InitPlatformInterface()
