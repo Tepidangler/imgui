@@ -67,6 +67,8 @@ Index of this file:
 //-----------------------------------------------------------------------------
 
 // Includes
+
+#include <cstdint>
 #include <float.h>                  // FLT_MIN, FLT_MAX
 #include <stdarg.h>                 // va_list, va_start, va_end
 #include <stddef.h>                 // ptrdiff_t, NULL
@@ -628,10 +630,35 @@ namespace ImGui
     IMGUI_API bool          InputFloat2(const char* label, float v[2], const char* format = "%.3f", ImGuiInputTextFlags flags = 0);
     IMGUI_API bool          InputFloat3(const char* label, float v[3], const char* format = "%.3f", ImGuiInputTextFlags flags = 0);
     IMGUI_API bool          InputFloat4(const char* label, float v[4], const char* format = "%.3f", ImGuiInputTextFlags flags = 0);
-    IMGUI_API bool          InputInt(const char* label, int* v, int step = 1, int step_fast = 100, ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputInt(const char* label, int* v, int step = 0, int step_fast = 0, ImGuiInputTextFlags flags = 0);
     IMGUI_API bool          InputInt2(const char* label, int v[2], ImGuiInputTextFlags flags = 0);
     IMGUI_API bool          InputInt3(const char* label, int v[3], ImGuiInputTextFlags flags = 0);
     IMGUI_API bool          InputInt4(const char* label, int v[4], ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputInt(const char* label, int16_t* v, int step = 0, int step_fast = 0, ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputInt2(const char* label, int16_t v[2], ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputInt3(const char* label, int16_t v[3], ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputInt4(const char* label, int16_t v[4], ImGuiInputTextFlags flags = 0);
+
+    IMGUI_API bool          InputInt(const char* label, int64_t* v, int step = 0, int step_fast = 0, ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputInt2(const char* label, int64_t v[2], ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputInt3(const char* label, int64_t v[3], ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputInt4(const char* label, int64_t v[4], ImGuiInputTextFlags flags = 0);
+
+    IMGUI_API bool          InputUInt(const char* label, uint16_t* v, int step = 0, int step_fast = 0, ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputUInt2(const char* label, uint16_t v[2], ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputUInt3(const char* label, uint16_t v[3], ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputUInt4(const char* label, uint16_t v[4], ImGuiInputTextFlags flags = 0);
+
+    IMGUI_API bool          InputUInt(const char* label, uint32_t* v, int step = 0, int step_fast = 0, ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputUInt2(const char* label, uint32_t v[2], ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputUInt3(const char* label, uint32_t v[3], ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputUInt4(const char* label, uint32_t v[4], ImGuiInputTextFlags flags = 0);
+
+    IMGUI_API bool          InputUInt(const char* label, uint64_t* v, int step = 0, int step_fast = 0, ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputUInt2(const char* label, uint64_t v[2], ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputUInt3(const char* label, uint64_t v[3], ImGuiInputTextFlags flags = 0);
+    IMGUI_API bool          InputUInt4(const char* label, uint64_t v[4], ImGuiInputTextFlags flags = 0);
+
     IMGUI_API bool          InputDouble(const char* label, double* v, double step = 0.0, double step_fast = 0.0, const char* format = "%.6f", ImGuiInputTextFlags flags = 0);
     IMGUI_API bool          InputScalar(const char* label, ImGuiDataType data_type, void* p_data, const void* p_step = NULL, const void* p_step_fast = NULL, const char* format = NULL, ImGuiInputTextFlags flags = 0);
     IMGUI_API bool          InputScalarN(const char* label, ImGuiDataType data_type, void* p_data, int components, const void* p_step = NULL, const void* p_step_fast = NULL, const char* format = NULL, ImGuiInputTextFlags flags = 0);
@@ -2688,7 +2715,6 @@ struct ImColor
     constexpr ImColor(ImU32 rgba)                                   : Value((float)((rgba >> IM_COL32_R_SHIFT) & 0xFF) * (1.0f / 255.0f), (float)((rgba >> IM_COL32_G_SHIFT) & 0xFF) * (1.0f / 255.0f), (float)((rgba >> IM_COL32_B_SHIFT) & 0xFF) * (1.0f / 255.0f), (float)((rgba >> IM_COL32_A_SHIFT) & 0xFF) * (1.0f / 255.0f)) {}
     inline operator ImU32() const                                   { return ImGui::ColorConvertFloat4ToU32(Value); }
     inline operator ImVec4() const                                  { return Value; }
-
     // FIXME-OBSOLETE: May need to obsolete/cleanup those helpers.
     inline void    SetHSV(float h, float s, float v, float a = 1.0f){ ImGui::ColorConvertHSVtoRGB(h, s, v, Value.x, Value.y, Value.z); Value.w = a; }
     static ImColor HSV(float h, float s, float v, float a = 1.0f)   { float r, g, b; ImGui::ColorConvertHSVtoRGB(h, s, v, r, g, b); return ImColor(r, g, b, a); }

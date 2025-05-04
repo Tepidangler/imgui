@@ -2037,9 +2037,13 @@ const ImGuiDataTypeInfo* ImGui::DataTypeGetInfo(ImGuiDataType data_type)
 int ImGui::DataTypeFormatString(char* buf, int buf_size, ImGuiDataType data_type, const void* p_data, const char* format)
 {
     // Signedness doesn't matter when pushing integer arguments
-    if (data_type == ImGuiDataType_S32 || data_type == ImGuiDataType_U32)
+    if (data_type == ImGuiDataType_S32)
+        return ImFormatString(buf, buf_size, format, *(const ImS32*)p_data);
+    if (data_type == ImGuiDataType_U32)
         return ImFormatString(buf, buf_size, format, *(const ImU32*)p_data);
-    if (data_type == ImGuiDataType_S64 || data_type == ImGuiDataType_U64)
+    if (data_type == ImGuiDataType_S64)
+        return ImFormatString(buf, buf_size, format, *(const ImS64*)p_data);
+    if (data_type == ImGuiDataType_U64)
         return ImFormatString(buf, buf_size, format, *(const ImU64*)p_data);
     if (data_type == ImGuiDataType_Float)
         return ImFormatString(buf, buf_size, format, *(const float*)p_data);
@@ -2053,6 +2057,8 @@ int ImGui::DataTypeFormatString(char* buf, int buf_size, ImGuiDataType data_type
         return ImFormatString(buf, buf_size, format, *(const ImS16*)p_data);
     if (data_type == ImGuiDataType_U16)
         return ImFormatString(buf, buf_size, format, *(const ImU16*)p_data);
+
+
     IM_ASSERT(0);
     return 0;
 }
@@ -3608,6 +3614,133 @@ bool ImGui::InputInt3(const char* label, int v[3], ImGuiInputTextFlags flags)
 bool ImGui::InputInt4(const char* label, int v[4], ImGuiInputTextFlags flags)
 {
     return InputScalarN(label, ImGuiDataType_S32, v, 4, NULL, NULL, "%d", flags);
+}
+
+bool ImGui::InputInt(const char* label, int16_t* v, int step, int step_fast, ImGuiInputTextFlags flags)
+{
+    // Hexadecimal input provided as a convenience but the flag name is awkward. Typically you'd use InputText() to parse your own data, if you want to handle prefixes.
+    const char* format = (flags & ImGuiInputTextFlags_CharsHexadecimal) ? "%08X" : "%d";
+    return InputScalar(label, ImGuiDataType_S16, (void*)v, (void*)(step > 0 ? &step : NULL), (void*)(step_fast > 0 ? &step_fast : NULL), format, flags);
+}
+
+bool ImGui::InputInt2(const char* label, int16_t v[2], ImGuiInputTextFlags flags)
+{
+    return InputScalarN(label, ImGuiDataType_S16, v, 2, NULL, NULL, "%d", flags);
+}
+
+bool ImGui::InputInt3(const char* label, int16_t v[3], ImGuiInputTextFlags flags)
+{
+    return InputScalarN(label, ImGuiDataType_S16, v, 3, NULL, NULL, "%d", flags);
+}
+
+bool ImGui::InputInt4(const char* label, int16_t v[4], ImGuiInputTextFlags flags)
+{
+    return InputScalarN(label, ImGuiDataType_S16, v, 4, NULL, NULL, "%d", flags);
+}
+
+bool ImGui::InputInt(const char* label, int64_t* v, int step, int step_fast, ImGuiInputTextFlags flags)
+{
+    // Hexadecimal input provided as a convenience but the flag name is awkward. Typically you'd use InputText() to parse your own data, if you want to handle prefixes.
+    const char* format = (flags & ImGuiInputTextFlags_CharsHexadecimal) ? "%08X" : "%d";
+    return InputScalar(label, ImGuiDataType_S64, (void*)v, (void*)(step > 0 ? &step : NULL), (void*)(step_fast > 0 ? &step_fast : NULL), format, flags);
+}
+
+bool ImGui::InputInt2(const char* label, int64_t v[2], ImGuiInputTextFlags flags)
+{
+    return InputScalarN(label, ImGuiDataType_S64, v, 2, NULL, NULL, "%d", flags);
+}
+
+bool ImGui::InputInt3(const char* label, int64_t v[3], ImGuiInputTextFlags flags)
+{
+    return InputScalarN(label, ImGuiDataType_S64, v, 3, NULL, NULL, "%d", flags);
+}
+
+bool ImGui::InputInt4(const char* label, int64_t v[4], ImGuiInputTextFlags flags)
+{
+    return InputScalarN(label, ImGuiDataType_S64, v, 4, NULL, NULL, "%d", flags);
+}
+
+bool ImGui::InputUInt(const char* label, uint16_t* v, int step, int step_fast, ImGuiInputTextFlags flags)
+{
+    // Hexadecimal input provided as a convenience but the flag name is awkward. Typically you'd use InputText() to parse your own data, if you want to handle prefixes.
+    const char* format = (flags & ImGuiInputTextFlags_CharsHexadecimal) ? "%08X" : "%u";
+    return InputScalar(label, ImGuiDataType_U16, (void*)v, (void*)(step > 0 ? &step : NULL), (void*)(step_fast > 0 ? &step_fast : NULL), format, flags);
+}
+
+bool ImGui::InputUInt2(const char* label, uint16_t v[2], ImGuiInputTextFlags flags)
+{
+    return InputScalarN(label, ImGuiDataType_U16, v, 2, NULL, NULL, "%u", flags);
+}
+
+bool ImGui::InputUInt3(const char* label, uint16_t v[3], ImGuiInputTextFlags flags)
+{
+    return InputScalarN(label, ImGuiDataType_U16, v, 3, NULL, NULL, "%u", flags);
+}
+
+bool ImGui::InputUInt4(const char* label, uint16_t v[4], ImGuiInputTextFlags flags)
+{
+    return InputScalarN(label, ImGuiDataType_U16, v, 4, NULL, NULL, "%u", flags);
+}
+
+bool ImGui::InputUInt(const char* label, uint32_t* v, int step, int step_fast, ImGuiInputTextFlags flags)
+{
+    // Hexadecimal input provided as a convenience but the flag name is awkward. Typically you'd use InputText() to parse your own data, if you want to handle prefixes.
+    const char* format = (flags & ImGuiInputTextFlags_CharsHexadecimal) ? "%08X" : "%u";
+    return InputScalar(label, ImGuiDataType_U32, (void*)v, (void*)(step > 0 ? &step : NULL), (void*)(step_fast > 0 ? &step_fast : NULL), format, flags);
+}
+
+bool ImGui::InputUInt2(const char* label, uint32_t v[2], ImGuiInputTextFlags flags)
+{
+    return InputScalarN(label, ImGuiDataType_U32, v, 2, NULL, NULL, "%u", flags);
+}
+
+bool ImGui::InputUInt3(const char* label, uint32_t v[3], ImGuiInputTextFlags flags)
+{
+    return InputScalarN(label, ImGuiDataType_U32, v, 3, NULL, NULL, "%u", flags);
+}
+
+bool ImGui::InputUInt4(const char* label, uint32_t v[4], ImGuiInputTextFlags flags)
+{
+    return InputScalarN(label, ImGuiDataType_U32, v, 4, NULL, NULL, "%u", flags);
+}
+
+bool ImGui::InputUInt(const char* label, uint64_t* v, int step, int step_fast, ImGuiInputTextFlags flags)
+{
+    // Hexadecimal input provided as a convenience but the flag name is awkward. Typically you'd use InputText() to parse your own data, if you want to handle prefixes.
+#ifdef _MSC_VER
+    const char* format = (flags & ImGuiInputTextFlags_CharsHexadecimal) ? "%08X" : "%I64u";
+#else
+    const char* format = (flags & ImGuiInputTextFlags_CharsHexadecimal) ? "%08X" : "%llu";
+#endif
+    return InputScalar(label, ImGuiDataType_U64, (void*)v, (void*)(step > 0 ? &step : NULL), (void*)(step_fast > 0 ? &step_fast : NULL), format, flags);
+}
+
+bool ImGui::InputUInt2(const char* label, uint64_t v[2], ImGuiInputTextFlags flags)
+{
+#ifdef _MSC_VER
+    return InputScalarN(label, ImGuiDataType_U64, v, 2, NULL, NULL, "%I64u", flags);
+#else
+    return InputScalarN(label, ImGuiDataType_U64, v, 2, NULL, NULL, "%llu", flags);
+#endif;
+}
+
+bool ImGui::InputUInt3(const char* label, uint64_t v[3], ImGuiInputTextFlags flags)
+{
+#ifdef _MSC_VER
+    return InputScalarN(label, ImGuiDataType_U64, v, 3, NULL, NULL, "%I64u", flags);
+#else
+    return InputScalarN(label, ImGuiDataType_U64, v, 3, NULL, NULL, "%llu", flags);
+#endif
+}
+
+bool ImGui::InputUInt4(const char* label, uint64_t v[4], ImGuiInputTextFlags flags)
+{
+#ifdef _MSC_VER
+
+    return InputScalarN(label, ImGuiDataType_U64, v, 4, NULL, NULL, "%I64u", flags);
+#else
+    return InputScalarN(label, ImGuiDataType_U64, v, 4, NULL, NULL, "%llu", flags);
+#endif
 }
 
 bool ImGui::InputDouble(const char* label, double* v, double step, double step_fast, const char* format, ImGuiInputTextFlags flags)

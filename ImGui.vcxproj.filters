@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AGE">
+      <UniqueIdentifier>{695D2FA9-D53C-AE44-DE54-391B4AB314A6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AGE\Core">
+      <UniqueIdentifier>{614BB8A6-4DAE-474B-F633-8001E27513CE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AGE\Core\Public">
+      <UniqueIdentifier>{6F37129B-DB98-EFA8-6406-365BD0662668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AGE\Math">
+      <UniqueIdentifier>{E28BBDA6-CEEE-4C4B-7774-850163B618CE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AGE\Math\Private">
+      <UniqueIdentifier>{CCE4D7FA-B873-61C4-6192-75BF4D00726A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AGE\Math\Public">
+      <UniqueIdentifier>{D0BCDB45-3C1E-B953-C58B-FF0531ECEF12}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\AGE\Core\Public\AGEpch.h">
+      <Filter>src\AGE\Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\AGE\Math\Public\Vector4.h">
+      <Filter>src\AGE\Math\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="imconfig.h" />
+    <ClInclude Include="imgui.h" />
+    <ClInclude Include="imgui_internal.h" />
+    <ClInclude Include="imstb_rectpack.h" />
+    <ClInclude Include="imstb_textedit.h" />
+    <ClInclude Include="imstb_truetype.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\AGE\Core\Public\AGEpch.cpp">
+      <Filter>src\AGE\Core\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\AGE\Math\Private\Vector4.cpp">
+      <Filter>src\AGE\Math\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui.cpp" />
+    <ClCompile Include="imgui_demo.cpp" />
+    <ClCompile Include="imgui_draw.cpp" />
+    <ClCompile Include="imgui_tables.cpp" />
+    <ClCompile Include="imgui_widgets.cpp" />
+  </ItemGroup>
+</Project>

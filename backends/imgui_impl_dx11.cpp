@@ -649,11 +649,7 @@ static void ImGui_ImplDX11_CreateWindow(ImGuiViewport* viewport)
     sd.SampleDesc.Count = 1;
     sd.SampleDesc.Quality = 0;
     sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-<<<<<<< HEAD
-    sd.BufferCount = 4;
-=======
     sd.BufferCount = 2;
->>>>>>> 88811517a2ccade15546b6dd4dc4950adf80de9c
     sd.OutputWindow = hwnd;
     sd.Windowed = TRUE;
     sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
@@ -722,9 +718,7 @@ static void ImGui_ImplDX11_RenderWindow(ImGuiViewport* viewport, void*)
 static void ImGui_ImplDX11_SwapBuffers(ImGuiViewport* viewport, void*)
 {
     ImGui_ImplDX11_ViewportData* vd = (ImGui_ImplDX11_ViewportData*)viewport->RendererUserData;
-<<<<<<< HEAD
-    vd->SwapChain->Present(1, 0); // Present without vsync
-=======
+
     if (pSwapChainOccluded)
     {
         ::Sleep(10);
@@ -734,7 +728,6 @@ static void ImGui_ImplDX11_SwapBuffers(ImGuiViewport* viewport, void*)
         vd->SwapChain->Present(1, 0);
     }
     pSwapChainOccluded = (vd->SwapChain->Present(1, DXGI_PRESENT_TEST) == DXGI_STATUS_OCCLUDED); // Present without vsync
->>>>>>> 88811517a2ccade15546b6dd4dc4950adf80de9c
 }
 
 static void ImGui_ImplDX11_InitPlatformInterface()
