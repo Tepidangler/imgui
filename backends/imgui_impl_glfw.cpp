@@ -166,6 +166,8 @@ struct ImGui_ImplGlfw_Data
     GLFWkeyfun              PrevUserCallbackKey;
     GLFWcharfun             PrevUserCallbackChar;
     GLFWmonitorfun          PrevUserCallbackMonitor;
+    GLFWframebuffersizefun  PrevUserCallbackFrameBuffer;
+    GLFWwindowsizefun       PrevUserCallbackWindowSize;
 #ifdef _WIN32
     WNDPROC                 PrevWndProc;
 #endif
@@ -492,6 +494,26 @@ void ImGui_ImplGlfw_MonitorCallback(GLFWmonitor*, int)
     bd->WantUpdateMonitors = true;
 }
 
+void ImGui_ImplGlfw_FrameBufferCallback(GLFWwindow* window, int width, int height)
+{
+    ImGui_ImplGlfw_Data* bd = ImGui_ImplGlfw_GetBackendData();
+    ImGuiIO& io = ImGui::GetIO();
+    if (bd->PrevUserCallbackChar != nullptr && ImGui_ImplGlfw_ShouldChainCallback(window))
+        bd->PrevUserCallbackFrameBuffer(window, width, height);
+
+    ImGui_ImplGlfw_UpdateMonitors();
+    std::cout << "Window Framebuffer Callback" << std::endl;
+}
+
+void ImGui_ImplGlfw_WindowResizeCallback(GLFWwindow* Window, int Width, int Height)
+{
+    ImGui_ImplGlfw_Data* bd = ImGui_ImplGlfw_GetBackendData();
+    if (bd->PrevUserCallbackChar != nullptr && ImGui_ImplGlfw_ShouldChainCallback(Window))
+        bd->PrevUserCallbackWindowSize(Window, Width, Height);
+    ImGui_ImplGlfw_UpdateMonitors();
+    std::cout << "Window Resize Callback" << std::endl;
+}
+
 #ifdef __EMSCRIPTEN__
 static EM_BOOL ImGui_ImplEmscripten_WheelCallback(int, const EmscriptenWheelEvent* ev, void*)
 {
@@ -528,6 +550,8 @@ void ImGui_ImplGlfw_InstallCallbacks(GLFWwindow* window)
     bd->PrevUserCallbackKey = glfwSetKeyCallback(window, ImGui_ImplGlfw_KeyCallback);
     bd->PrevUserCallbackChar = glfwSetCharCallback(window, ImGui_ImplGlfw_CharCallback);
     bd->PrevUserCallbackMonitor = glfwSetMonitorCallback(ImGui_ImplGlfw_MonitorCallback);
+    bd->PrevUserCallbackFrameBuffer = glfwSetFramebufferSizeCallback(window, ImGui_ImplGlfw_FrameBufferCallback);
+    bd->PrevUserCallbackWindowSize = glfwSetWindowSizeCallback(window, ImGui_ImplGlfw_WindowResizeCallback);
     bd->InstalledCallbacks = true;
 }
 
