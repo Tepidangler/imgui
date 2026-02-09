@@ -10,6 +10,7 @@ set(BACKENDS ${BACKENDS_DIR}imgui_impl_glfw.h
 )
 include_directories(BEFORE
                     "${MAIN_SRC}"
+                    "${GLFW_SOURCE_DIR}/include"
 )
 
 if(WIN32)
@@ -56,7 +57,3 @@ add_library(ImGUI STATIC
 )
 set_property(TARGET ImGUI PROPERTY
         MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-
-target_link_libraries(
-        glfw::glfw
-)
