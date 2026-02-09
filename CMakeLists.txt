@@ -7,16 +7,8 @@ set(BACKENDS ${BACKENDS_DIR}imgui_impl_glfw.h
              ${BACKENDS_DIR}imgui_impl_glfw.cpp
              ${BACKENDS_DIR}imgui_impl_opengl3.h
              ${BACKENDS_DIR}imgui_impl_opengl3.cpp
-             ${BACKENDS_DIR}imgui_impl_vulkan.h
-             ${BACKENDS_DIR}imgui_impl_vulkan.cpp
-             ${BACKENDS_DIR}imgui_impl_dx12.h
-             ${BACKENDS_DIR}imgui_impl_dx12.cpp
-             #${BACKENDS_DIR}imgui_impl_win32.h
-             #${BACKENDS_DIR}imgui_impl_win32.cpp
-             ${BACKENDS_DIR}imgui_impl_dx11.h
-             ${BACKENDS_DIR}imgui_impl_dx11.cpp
 )
-include_directories(BEFORE 
+include_directories(BEFORE
                     "${MAIN_SRC}"
 )
 
@@ -57,6 +49,14 @@ message(STATUS "CPP Files: ${CPP_FILES}")
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${HDR_FILES} )
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${CPP_FILES})
-add_library(ImGUI STATIC ${CPP_FILES} ${HDR_FILES} ${BACKENDS})
+add_library(ImGUI STATIC
+        ${CPP_FILES}
+        ${HDR_FILES}
+        ${BACKENDS}
+)
 set_property(TARGET ImGUI PROPERTY
-		MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+        MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
+target_link_libraries(
+        glfw::glfw
+)
