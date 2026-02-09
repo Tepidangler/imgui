@@ -17,7 +17,6 @@
 // - Documentation        https://dearimgui.com/docs (same as your local docs/ folder).
 // - Introduction, links and more at the top of imgui.cpp
 
-#include "AGEpch.h"
 #include "imgui.h"
 #ifndef IMGUI_DISABLE
 #include "imgui_impl_win32.h"
