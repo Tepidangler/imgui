@@ -17,12 +17,7 @@ set(BACKENDS ${BACKENDS_DIR}imgui_impl_glfw.h
              ${BACKENDS_DIR}imgui_impl_dx11.cpp
 )
 include_directories(BEFORE 
-                    ${CMAKE_SOURCE_DIR}/Engine/src/AGE
                     "${MAIN_SRC}"
-                    ${CMAKE_SOURCE_DIR}/Engine/src/AGE/Core/Public
-                    "${INC_VK}"
-                    "${INC_GLFW}" 
-                    "${INC_SPDLOG}"
 )
 
 if(WIN32)
