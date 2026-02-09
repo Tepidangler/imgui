@@ -63,3 +63,5 @@ message(STATUS "CPP Files: ${CPP_FILES}")
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${HDR_FILES} )
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${CPP_FILES})
 add_library(ImGUI STATIC ${CPP_FILES} ${HDR_FILES} ${BACKENDS})
+set_property(TARGET ImGUI PROPERTY
+		MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
