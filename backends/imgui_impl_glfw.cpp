@@ -501,7 +501,6 @@ void ImGui_ImplGlfw_FrameBufferCallback(GLFWwindow* window, int width, int heigh
         bd->PrevUserCallbackFrameBuffer(window, width, height);
 
     ImGui_ImplGlfw_UpdateMonitors();
-    std::cout << "Window Framebuffer Callback" << std::endl;
 }
 
 void ImGui_ImplGlfw_WindowResizeCallback(GLFWwindow* Window, int Width, int Height)
@@ -510,7 +509,6 @@ void ImGui_ImplGlfw_WindowResizeCallback(GLFWwindow* Window, int Width, int Heig
     if (bd->PrevUserCallbackChar != nullptr && ImGui_ImplGlfw_ShouldChainCallback(Window))
         bd->PrevUserCallbackWindowSize(Window, Width, Height);
     ImGui_ImplGlfw_UpdateMonitors();
-    std::cout << "Window Resize Callback" << std::endl;
 }
 
 #ifdef __EMSCRIPTEN__
