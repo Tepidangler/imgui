@@ -8,6 +8,13 @@ set(BACKENDS ${BACKENDS_DIR}imgui_impl_glfw.h
              ${BACKENDS_DIR}imgui_impl_opengl3.h
              ${BACKENDS_DIR}imgui_impl_opengl3.cpp
 )
+
+set(MISC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/misc/)
+set(MISC_FILES
+        ${MISC_DIR}single_file/imgui_single_file.h
+        ${MISC_DIR}cpp/imgui_stdlib.cpp
+        ${MISC_DIR}cpp/imgui_stdlib.h
+        
 include_directories(BEFORE
                     "${MAIN_SRC}"
                     "${GLFW_SOURCE_DIR}/include"
@@ -37,18 +44,13 @@ endif()
 
 message(Status " Using STD Format in SPDLOG?: " ${SPDLOG_USE_STD_FORMAT})
 
-file(GLOB HDR_FILES 
+file(GLOB HDR_FILES
                     ${MAIN_SRC}
-                    "${MAIN_SRC}/misc/freetype/"
-                    "${MAIN_SRC}/misc/cpp/"
-                    "${MAIN_SRC}/misc/single_file/"
+                    ${MAIN_SRC}misc/cpp/
 					*.h)
 
-file(GLOB CPP_FILES 
+file(GLOB CPP_FILES
                     ${MAIN_SRC}
-                    "${MAIN_SRC}/misc/fonts/"
-                    "${MAIN_SRC}/misc/freetype/"
-                    "${MAIN_SRC}/misc/cpp/"
 					*.cpp)
                     
 message(STATUS "Backend Files: ${BACKENDS}")
@@ -61,6 +63,7 @@ add_library(ImGUI STATIC
         ${CPP_FILES}
         ${HDR_FILES}
         ${BACKENDS}
+        ${MISC_FILES}
 )
 set_property(TARGET ImGUI PROPERTY
         MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
