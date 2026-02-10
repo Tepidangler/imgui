@@ -13,7 +13,7 @@ set(MISC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/misc/)
 set(MISC_FILES
         ${MISC_DIR}single_file/imgui_single_file.h
         ${MISC_DIR}cpp/imgui_stdlib.cpp
-        ${MISC_DIR}cpp/imgui_stdlib.h
+        ${MISC_DIR}cpp/imgui_stdlib.h)
         
 include_directories(BEFORE
                     "${MAIN_SRC}"
