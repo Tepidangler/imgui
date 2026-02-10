@@ -39,11 +39,18 @@ message(Status " Using STD Format in SPDLOG?: " ${SPDLOG_USE_STD_FORMAT})
 
 file(GLOB HDR_FILES 
                     ${MAIN_SRC}
+                    ${MAIN_SRC}/misc/freetype/
+                    ${MAIN_SRC}/misc/cpp/
+                    ${MAIN_SRC}/misc/single_file/
 					*.h)
 
 file(GLOB CPP_FILES 
                     ${MAIN_SRC}
+                    ${MAIN_SRC}/misc/fonts/
+                    ${MAIN_SRC}/misc/freetype/
+                    ${MAIN_SRC}/misc/cpp/
 					*.cpp)
+                    
 message(STATUS "Backend Files: ${BACKENDS}")
 message(STATUS "HDR Files: ${HDR_FILES}")
 message(STATUS "CPP Files: ${CPP_FILES}")
