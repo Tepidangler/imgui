@@ -3,11 +3,33 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(MAIN_SRC ${CMAKE_CURRENT_SOURCE_DIR}/)
 set(BACKENDS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/backends/)
-set(BACKENDS ${BACKENDS_DIR}imgui_impl_glfw.h
-             ${BACKENDS_DIR}imgui_impl_glfw.cpp
-             ${BACKENDS_DIR}imgui_impl_opengl3.h
-             ${BACKENDS_DIR}imgui_impl_opengl3.cpp
-)
+if(WIN32)
+    set(BACKENDS ${BACKENDS_DIR}imgui_impl_glfw.h
+            ${BACKENDS_DIR}imgui_impl_glfw.cpp
+            ${BACKENDS_DIR}imgui_impl_opengl3.h
+            ${BACKENDS_DIR}imgui_impl_opengl3.cpp
+            ${BACKENDS_DIR}imgui_impl_dx11.h
+            ${BACKENDS_DIR}imgui_impl_dx11.cpp
+            ${BACKENDS_DIR}imgui_impl_vulkan.h
+            ${BACKENDS_DIR}imgui_impl_vulkan.cpp
+    )
+elseif(UNIX)
+    set(BACKENDS ${BACKENDS_DIR}imgui_impl_glfw.h
+            ${BACKENDS_DIR}imgui_impl_glfw.cpp
+            ${BACKENDS_DIR}imgui_impl_opengl3.h
+            ${BACKENDS_DIR}imgui_impl_opengl3.cpp
+            ${BACKENDS_DIR}imgui_impl_vulkan.h
+            ${BACKENDS_DIR}imgui_impl_vulkan.cpp
+    )
+elseif(APPLE)
+    set(BACKENDS ${BACKENDS_DIR}imgui_impl_glfw.h
+            ${BACKENDS_DIR}imgui_impl_glfw.cpp
+            ${BACKENDS_DIR}imgui_impl_opengl3.h
+            ${BACKENDS_DIR}imgui_impl_opengl3.cpp
+            ${BACKENDS_DIR}imgui_impl_metal.h
+            ${BACKENDS_DIR}imgui_impl_metal.mm
+    )
+endif()
 
 set(MISC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/misc/)
 set(MISC_FILES
