@@ -78,6 +78,7 @@ file(GLOB CPP_FILES
 message(STATUS "Backend Files: ${BACKENDS}")
 message(STATUS "HDR Files: ${HDR_FILES}")
 message(STATUS "CPP Files: ${CPP_FILES}")
+find_package(Vulkan REQUIRED)
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Header Files" FILES ${HDR_FILES} )
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "Source Files" FILES ${CPP_FILES})
@@ -87,5 +88,31 @@ add_library(ImGUI STATIC
         ${BACKENDS}
         ${MISC_FILES}
 )
+
+target_link_libraries(ImGUI PUBLIC
+						Vulkan::Vulkan
+                        )
+
+if(WIN32)
+	target_link_libraries(ImGUI PUBLIC
+			d3d11
+			dxgi
+			d3dcompiler
+	)
+	target_compile_definitions(ImGUI PUBLIC
+			VK_USE_PLATFORM_WIN32_KHR
+	)
+elseif(UNIX)
+
+	target_compile_definitions(ImGUI PUBLIC
+			VK_USE_PLATFORM_XLIB_KHR
+	)
+
+elseif(APPLE)
+	target_compile_definitions(ImGUI PUBLIC
+			VK_USE_PLATFORM_METAL_KHR
+	)
+
+endif()
 set_property(TARGET ImGUI PROPERTY
         MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
